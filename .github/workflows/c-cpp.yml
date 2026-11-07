@@ -3,10 +3,10 @@ name: Build C++ Extension
 on:
   push:
     branches: [ main ]
-    
-permissions: 
+
+permissions:
   contents: write
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,12 +27,12 @@ jobs:
 
     - name: Compile C++ extension
       run: |
-        g++ -O3 -Wall -shared -std=c++11 -fPIC $(python3 -m pybind11 --includes) gacha_sim_cpp.cpp -o gacha_sim_cpp$(python3-config --extension-suffix)
+        g++ -O3 -Wall -shared -std=c++11 -fPIC $(python3 -m pybind11 --includes) gacha_sim_cpp.cpp -o gacha_sim_cpp.so
 
     - name: Commit compiled file
       run: |
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git add gacha_sim_cpp*.so
+        git add gacha_sim_cpp.so
         git commit -m "Auto-compile C++ extension" || echo "No changes to commit"
         git push
