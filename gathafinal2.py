@@ -1,3 +1,13 @@
+import subprocess
+
+# Streamlit Cloud環境(Linux)でC++モジュールを自前ビルドする
+try:
+    import gacha_sim_cpp
+except ModuleNotFoundError:
+    # pybind11 や C++ コンパイルコマンドを実行
+    subprocess.run(["g++", "-O3", "-wall", "-shared", "-std=c++11", "-fPIC", 
+                    "`python3 -m pybind11 --includes`", "gacha_sim_cpp.cpp", 
+                    "-o", "gacha_sim_cpp`python3-config --extension-suffix`"], shell=True, check=True)
 import streamlit as st
 import random
 import math
